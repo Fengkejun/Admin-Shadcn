@@ -15,11 +15,15 @@ import { currentUser } from "@/config/permissions"
 import {
   Bell,
   LogOut,
+  Moon,
   Search,
   Settings,
+  Sun,
   User,
 } from "lucide-react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
+import { applyTheme, getStoredTheme } from "@/utils/theme"
+import { useState } from "react"
 
 /** 从菜单配置中递归查找当前路径对应的面包屑 */
 function findBreadcrumbs(
@@ -49,6 +53,14 @@ export function TopBar() {
   const location = useLocation()
   const navigate = useNavigate()
   const breadcrumbs = findBreadcrumbs(menuConfig, location.pathname) ?? []
+
+  // 主题切换
+  const [isDark, setIsDark] = useState(getStoredTheme() === "dark")
+  function handleToggleTheme() {
+    const next = isDark ? "light" : "dark"
+    setIsDark(!isDark)
+    applyTheme(next)
+  }
 
   // 从 localStorage 读取用户信息，fallback 到静态配置
   const userName = (() => {
@@ -115,6 +127,16 @@ export function TopBar() {
           <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-destructive-foreground">
             3
           </span>
+        </Button>
+
+        {/* 主题切换 */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={handleToggleTheme}
+        >
+          {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </Button>
 
         {/* 用户头像下拉 */}

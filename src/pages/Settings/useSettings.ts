@@ -25,7 +25,7 @@ function getDefaultSettings(): SettingItem[] {
  * 系统设置逻辑 hook
  * - 开关设置项切换
  * - 持久化到 localStorage
- * - 深色模式联动 applyTheme
+ * - 深色模式联动 applyTheme 切换整个页面主题
  */
 export function useSettings() {
   const [settings, setSettings] = useState<SettingItem[]>(() => {
@@ -45,28 +45,33 @@ export function useSettings() {
   })
 
   const toggleSetting = useCallback((key: string) => {
-    let toggledItem: SettingItem | undefined
-
+    // 先计算新值，再更新状态和执行副作用
     setSettings((prev) => {
       const next = prev.map((s) =>
         s.key === key ? { ...s, value: !s.value } : s
       )
-      toggledItem = next.find((s) => s.key === key)
+
+      // 持久化
       try {
         localStorage.setItem("admin_settings", JSON.stringify(next))
       } catch {
         // ignore
       }
+
+      // 深色模式：切换整个页面主题
+      const toggled = next.find((s) => s.key === key)
+      if (toggled) {
+        if (toggled.key === "dark_mode") {
+          applyTheme(toggled.value ? "dark" : "light")
+        }
+        // toast 使用 setTimeout 避免 StrictMode 双重执行
+        setTimeout(() => {
+          toast.success(`${toggled.label}已${toggled.value ? "开启" : "关闭"}`)
+        }, 0)
+      }
+
       return next
     })
-
-    // toast 移出 updater，避免 StrictMode 双重执行
-    if (toggledItem) {
-      if (toggledItem.key === "dark_mode") {
-        applyTheme(toggledItem.value ? "dark" : "light")
-      }
-      toast.success(`${toggledItem.label}已${toggledItem.value ? "开启" : "关闭"}`)
-    }
   }, [])
 
   const resetSettings = useCallback(() => {
