@@ -2,6 +2,12 @@
 
 基于 **React 19 + shadcn/ui + Tailwind CSS v4** 的现代化后台管理系统模板，开箱即用，适合快速搭建 B 端管理平台并进行二次开发。
 
+## 🔗 在线预览
+
+**[https://admin-shadcn-o5gnra4bj-fengkejuns-projects.vercel.app](https://admin-shadcn-o5gnra4bj-fengkejuns-projects.vercel.app)**
+
+> 演示账号：输入任意邮箱格式（如 `admin@acme.com`）和含大小写字母 + 数字的 8 位密码即可登录
+
 ## ✨ 特性
 
 - **React 19** + **TypeScript 6** + **Vite 8** — 最新技术栈

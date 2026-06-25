@@ -244,6 +244,11 @@ export function LoginPage() {
             </CardContent>
           </Card>
 
+          {/* 演示提示 */}
+          <div className="rounded-lg border border-dashed p-3 text-center text-xs text-muted-foreground">
+            演示账号：输入任意邮箱格式（如 <span className="font-medium text-foreground">admin@acme.com</span>）和含大小写字母 + 数字的 8 位密码即可登录
+          </div>
+
           {/* 注册链接 */}
           <p className="text-center text-sm text-muted-foreground">
             还没有账户？{" "}
