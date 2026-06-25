@@ -65,10 +65,12 @@ export function TopBar() {
   })()
 
   const handleLogout = () => {
-    // 模拟清除 token
+    // 清除所有 token（localStorage + sessionStorage）
     localStorage.removeItem("admin_token")
+    localStorage.removeItem("admin_remember")
+    sessionStorage.removeItem("admin_token")
     // 跳转回登录页
-    navigate("/login")
+    navigate("/login", { replace: true })
   }
 
   return (
