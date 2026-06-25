@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { menuConfig, type MenuItem } from "@/config/menus"
 import { currentUser } from "@/config/permissions"
+import { applyTheme, getStoredTheme } from "@/utils/theme"
 import {
   Bell,
   LogOut,
@@ -21,9 +22,8 @@ import {
   Sun,
   User,
 } from "lucide-react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { applyTheme, getStoredTheme } from "@/utils/theme"
 import { useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 
 /** 从菜单配置中递归查找当前路径对应的面包屑 */
 function findBreadcrumbs(
@@ -124,7 +124,7 @@ export function TopBar() {
         {/* 通知 */}
         <Button variant="ghost" size="icon" className="relative h-8 w-8">
           <Bell className="h-4 w-4" />
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-destructive-foreground">
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-white">
             3
           </span>
         </Button>
