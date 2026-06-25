@@ -50,6 +50,20 @@ export function TopBar() {
   const navigate = useNavigate()
   const breadcrumbs = findBreadcrumbs(menuConfig, location.pathname) ?? []
 
+  // 从 localStorage 读取用户信息，fallback 到静态配置
+  const userName = (() => {
+    try {
+      const stored = localStorage.getItem("admin_profile")
+      if (stored) {
+        const p = JSON.parse(stored)
+        if (p.name) return p.name
+      }
+    } catch {
+      // ignore
+    }
+    return currentUser.name
+  })()
+
   const handleLogout = () => {
     // 模拟清除 token
     localStorage.removeItem("admin_token")
@@ -112,7 +126,7 @@ export function TopBar() {
                   </AvatarFallback>
                 </Avatar>
                 <span className="hidden text-sm font-medium sm:inline">
-                  {currentUser.name}
+                  {userName}
                 </span>
               </Button>
             )}
@@ -121,7 +135,7 @@ export function TopBar() {
             <DropdownMenuGroup>
               <DropdownMenuLabel>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium">{currentUser.name}</span>
+                  <span className="text-sm font-medium">{userName}</span>
                   <span className="text-xs text-muted-foreground">
                     {currentUser.email}
                   </span>
@@ -129,11 +143,11 @@ export function TopBar() {
               </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/profile")}>
               <User className="mr-2 h-4 w-4" />
               个人中心
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/settings")}>
               <Settings className="mr-2 h-4 w-4" />
               系统设置
             </DropdownMenuItem>

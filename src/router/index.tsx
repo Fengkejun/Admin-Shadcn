@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom"
 import { AppLayout } from "@/components/layout"
 import { LoginPage } from "@/pages/Login"
 import { DashboardPage } from "@/pages/Dashboard"
+import { ProfilePage } from "@/pages/Profile"
 import { UsersPage } from "@/pages/Users"
 import { RolesPage } from "@/pages/Users/Roles"
 import { OrdersPage } from "@/pages/Orders"
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/dashboard" replace /> },
       { path: "dashboard", element: <DashboardPage /> },
+      { path: "profile", element: <ProfilePage /> },
       { path: "users", element: <UsersPage /> },
       { path: "users/roles", element: <RolesPage /> },
       { path: "orders", element: <OrdersPage /> },
