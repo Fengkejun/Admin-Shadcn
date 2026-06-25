@@ -85,3 +85,21 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+/* Sonner Toast 样式覆盖 — 确保不透明 */
+[data-sonner-toaster] {
+  --normal-bg: oklch(1 0 0) !important;
+  --normal-text: oklch(0.145 0.017 285.823) !important;
+  --normal-border: oklch(0.922 0.008 285.823) !important;
+}
+
+.dark [data-sonner-toaster] {
+  --normal-bg: oklch(0.205 0.02 285.823) !important;
+  --normal-text: oklch(0.985 0 0) !important;
+  --normal-border: oklch(0.269 0.019 285.823) !important;
+}
+
+[data-sonner-toast] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}

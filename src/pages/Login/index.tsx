@@ -26,11 +26,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 import { Navigate } from "react-router-dom"
 import { GithubIcon, GoogleIcon } from "./icons"
-import { useLogin } from "./useLogin"
+import { useLogin, getStoredToken } from "./useLogin"
 
 /**
  * 登录页 — 纯 UI 层
@@ -40,9 +39,8 @@ export function LoginPage() {
   const { form, showPassword, setShowPassword, isLoading, onSubmit } =
     useLogin()
 
-  // 简单的路由守卫：如果已登录，直接跳转到首页
-  const token = localStorage.getItem("admin_token")
-  if (token) {
+  // 路由守卫：已登录则跳转首页
+  if (getStoredToken()) {
     return <Navigate to="/" replace />
   }
 
@@ -205,15 +203,23 @@ export function LoginPage() {
                   />
 
                   {/* 记住我 */}
-                  <div className="flex items-center gap-2">
-                    <Checkbox id="remember" />
-                    <Label
-                      htmlFor="remember"
-                      className="text-sm font-normal text-muted-foreground"
-                    >
-                      记住我的登录状态
-                    </Label>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="remember"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center gap-2 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel className="text-sm font-normal text-muted-foreground cursor-pointer">
+                          记住我的登录状态
+                        </FormLabel>
+                      </FormItem>
+                    )}
+                  />
 
                   {/* 提交 */}
                   <Button

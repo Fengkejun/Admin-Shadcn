@@ -10,7 +10,7 @@ import {
 /**
  * Sonner Toast 组件
  * - 从正上方弹出提示
- * - 自动跟随系统深色/浅色主题
+ * - 样式在 index.css 中通过 CSS 变量控制（不透明背景）
  */
 const Toaster = ({ ...props }: ToasterProps) => {
   return (
@@ -24,14 +24,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
         error: <OctagonXIcon className="size-4" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
       }}
-      style={
-        {
-          "--normal-bg": "var(--popover)",
-          "--normal-text": "var(--popover-foreground)",
-          "--normal-border": "var(--border)",
-          "--border-radius": "var(--radius)",
-        } as React.CSSProperties
-      }
       {...props}
     />
   )
