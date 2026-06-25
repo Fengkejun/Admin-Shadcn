@@ -64,7 +64,7 @@ export function AnalyticsPage() {
               <span
                 className={cn(
                   "flex items-center gap-1 text-xs font-medium pt-1",
-                  m.trend === "up" ? "text-emerald-600" : "text-red-600"
+                  m.trend === "up" ? "text-emerald-600 dark:text-emerald-400" : "text-red-600 dark:text-red-400"
                 )}
               >
                 {m.trend === "up" ? (
