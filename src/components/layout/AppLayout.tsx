@@ -36,12 +36,6 @@ export function AppLayout() {
   const [collapsed, setCollapsed] = useState(loadCollapsed)
   const [expandedIds, setExpandedIds] = useState<Set<string>>(loadExpandedIds)
 
-  // 简单的路由守卫：检查是否有 token
-  const token = localStorage.getItem("admin_token")
-  if (!token) {
-    return <Navigate to="/login" replace />
-  }
-
   // 持久化侧边栏折叠状态
   useEffect(() => {
     try {
@@ -78,6 +72,14 @@ export function AppLayout() {
       return next
     })
   }, [])
+
+  // 路由守卫放在最后 — hooks 必须在条件判断之前全部调用
+  const token =
+    localStorage.getItem("admin_token") ||
+    sessionStorage.getItem("admin_token")
+  if (!token) {
+    return <Navigate to="/login" replace />
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
