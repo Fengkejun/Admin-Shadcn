@@ -124,7 +124,7 @@ export function TopBar() {
         {/* 通知 */}
         <Button variant="ghost" size="icon" className="relative h-8 w-8">
           <Bell className="h-4 w-4" />
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-white">
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-destructive-foreground">
             3
           </span>
         </Button>

@@ -1,9 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import { z } from "zod"
 
 /** localStorage / sessionStorage 键名 */
 const TOKEN_KEY = "admin_token"
@@ -54,9 +54,9 @@ export function useLogin() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      remember: false,
+      email: localStorage.getItem("admin_login_email") || "",
+      password: localStorage.getItem("admin_login_password") || "",
+      remember: localStorage.getItem(REMEMBER_KEY) === "true",
     },
   })
 
@@ -68,14 +68,18 @@ export function useLogin() {
 
     const token = "simulated_token_123"
 
-    // 根据「记住我」选择存储方式
+    // 根据「记住我」选择存储方式并记住账号密码
     if (data.remember) {
       localStorage.setItem(TOKEN_KEY, token)
       localStorage.setItem(REMEMBER_KEY, "true")
+      localStorage.setItem("admin_login_email", data.email)
+      localStorage.setItem("admin_login_password", data.password)
     } else {
       sessionStorage.setItem(TOKEN_KEY, token)
       localStorage.removeItem(TOKEN_KEY)
       localStorage.removeItem(REMEMBER_KEY)
+      localStorage.removeItem("admin_login_email")
+      localStorage.removeItem("admin_login_password")
     }
 
     toast.success("欢迎回来")
