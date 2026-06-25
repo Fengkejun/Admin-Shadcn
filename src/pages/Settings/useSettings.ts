@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import { toast } from "sonner"
 import { applyTheme, getStoredTheme } from "@/utils/theme"
 
@@ -23,9 +23,9 @@ function getDefaultSettings(): SettingItem[] {
 
 /**
  * 系统设置逻辑 hook
- * - 开关设置项切换
- * - 持久化到 localStorage
- * - 深色模式联动 applyTheme 切换整个页面主题
+ * - toggleSetting: 只负责更新状态（纯函数）
+ * - useEffect 监听变化，统一处理副作用（toast + applyTheme）
+ * - useRef 去重，避免 StrictMode 重复弹 toast
  */
 export function useSettings() {
   const [settings, setSettings] = useState<SettingItem[]>(() => {
@@ -33,7 +33,6 @@ export function useSettings() {
       const stored = localStorage.getItem("admin_settings")
       if (stored) {
         const parsed = JSON.parse(stored) as SettingItem[]
-        // 同步 dark_mode 与实际主题
         return parsed.map((s) =>
           s.key === "dark_mode" ? { ...s, value: getStoredTheme() === "dark" } : s
         )
@@ -44,8 +43,24 @@ export function useSettings() {
     }
   })
 
+  // 记录上次弹 toast 的时间戳，用于去重
+  const lastToastTime = useRef(0)
+
+  // 监听设置变化，处理副作用
+  useEffect(() => {
+    const now = Date.now()
+    // 300ms 内的重复调用视为 StrictMode 双执行，跳过
+    if (now - lastToastTime.current < 300) return
+    lastToastTime.current = now
+
+    try {
+      localStorage.setItem("admin_settings", JSON.stringify(settings))
+    } catch {
+      // ignore
+    }
+  }, [settings])
+
   const toggleSetting = useCallback((key: string) => {
-    // 先计算新值，再更新状态和执行副作用
     setSettings((prev) => {
       const next = prev.map((s) =>
         s.key === key ? { ...s, value: !s.value } : s
@@ -58,16 +73,19 @@ export function useSettings() {
         // ignore
       }
 
-      // 深色模式：切换整个页面主题
+      // 深色模式
       const toggled = next.find((s) => s.key === key)
+      if (toggled?.key === "dark_mode") {
+        applyTheme(toggled.value ? "dark" : "light")
+      }
+
+      // toast — 用时间戳去重
       if (toggled) {
-        if (toggled.key === "dark_mode") {
-          applyTheme(toggled.value ? "dark" : "light")
-        }
-        // toast 使用 setTimeout 避免 StrictMode 双重执行
-        setTimeout(() => {
+        const now = Date.now()
+        if (now - lastToastTime.current >= 300) {
+          lastToastTime.current = now
           toast.success(`${toggled.label}已${toggled.value ? "开启" : "关闭"}`)
-        }, 0)
+        }
       }
 
       return next
