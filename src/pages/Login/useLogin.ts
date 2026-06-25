@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 /** 登录表单校验规则 */
 const loginSchema = z.object({
@@ -48,7 +49,11 @@ export function useLogin() {
     
     // 模拟保存 token
     localStorage.setItem("admin_token", "simulated_token_123")
-    
+
+    toast.success("登录成功", {
+      description: "欢迎回来，正在跳转至首页...",
+    })
+
     // 跳转到首页
     navigate("/")
   }

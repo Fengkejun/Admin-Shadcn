@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx shadcn@latest add button input label card form separator checkbox --yes)",
+      "Bash(npx shadcn@latest add form --yes)",
+      "Bash(npm install *)",
+      "Bash(node -e \"const rr = require\\('react-router-dom'\\); console.log\\(typeof rr.Navigate\\)\")",
+      "Bash(npm run *)",
+      "Bash(rm -f src/apis/index.ts src/apis/modules/user.ts src/utils/request.ts)",
+      "Bash(rmdir src/apis/modules src/apis src/utils)"
+    ]
+  }
+}
