@@ -1,14 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
-/*
- * Tailwind CSS v4 主题色方案：
- * 1. :root 定义浅色 CSS 变量
- * 2. .dark 覆盖为深色值
- * 3. @theme 引用这些变量，Tailwind 工具类自动跟随主题切换
- */
 
 :root {
   --radius: 0.625rem;
@@ -29,15 +21,10 @@
   --color-accent: oklch(0.97 0.006 285.823);
   --color-accent-foreground: oklch(0.205 0.02 285.823);
   --color-destructive: oklch(0.577 0.245 27.325);
-  --color-destructive-foreground: oklch(0.985 0 0);
+  --color-destructive-foreground: oklch(0.577 0.245 27.325);
   --color-border: oklch(0.922 0.008 285.823);
   --color-input: oklch(0.922 0.008 285.823);
   --color-ring: oklch(0.708 0.017 285.823);
-  --color-chart-1: oklch(0.646 0.222 41.116);
-  --color-chart-2: oklch(0.6 0.118 184.704);
-  --color-chart-3: oklch(0.398 0.07 227.392);
-  --color-chart-4: oklch(0.828 0.189 84.429);
-  --color-chart-5: oklch(0.769 0.188 70.08);
   --color-sidebar: oklch(0.985 0 0);
   --color-sidebar-foreground: oklch(0.145 0.017 285.823);
   --color-sidebar-primary: oklch(0.205 0.02 285.823);
@@ -64,15 +51,10 @@
   --color-accent: oklch(0.269 0.019 285.823);
   --color-accent-foreground: oklch(0.985 0 0);
   --color-destructive: oklch(0.396 0.141 25.723);
-  --color-destructive-foreground: oklch(0.985 0 0);
+  --color-destructive-foreground: oklch(0.637 0.237 25.331);
   --color-border: oklch(0.269 0.019 285.823);
   --color-input: oklch(0.269 0.019 285.823);
   --color-ring: oklch(0.439 0.017 285.823);
-  --color-chart-1: oklch(0.488 0.243 264.376);
-  --color-chart-2: oklch(0.696 0.17 162.48);
-  --color-chart-3: oklch(0.769 0.188 70.08);
-  --color-chart-4: oklch(0.627 0.265 303.9);
-  --color-chart-5: oklch(0.645 0.246 16.439);
   --color-sidebar: oklch(0.205 0.02 285.823);
   --color-sidebar-foreground: oklch(0.985 0 0);
   --color-sidebar-primary: oklch(0.488 0.243 264.376);
@@ -105,11 +87,6 @@
   --color-border: var(--color-border);
   --color-input: var(--color-input);
   --color-ring: var(--color-ring);
-  --color-chart-1: var(--color-chart-1);
-  --color-chart-2: var(--color-chart-2);
-  --color-chart-3: var(--color-chart-3);
-  --color-chart-4: var(--color-chart-4);
-  --color-chart-5: var(--color-chart-5);
   --color-sidebar: var(--color-sidebar);
   --color-sidebar-foreground: var(--color-sidebar-foreground);
   --color-sidebar-primary: var(--color-sidebar-primary);
@@ -128,16 +105,4 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-}
-
-/* Sonner Toast 样式覆盖 — 确保不透明 */
-[data-sonner-toaster] {
-  --normal-bg: var(--color-popover) !important;
-  --normal-text: var(--color-popover-foreground) !important;
-  --normal-border: var(--color-border) !important;
-}
-
-[data-sonner-toast] {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
 }
